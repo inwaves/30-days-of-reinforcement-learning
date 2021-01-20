@@ -1,12 +1,11 @@
-## MDPs and Bellman Equations
+# MDPs and Bellman Equations
 
-### Learning Goals
+## Learning Goals
 
 - Understand the Agent-Environment interface
 - Understand what MDPs (Markov Decision Processes) are and how to interpret transition diagrams
 - Understand Value Functions, Action-Value Functions, and Policy Functions
 - Understand the Bellman Equations and Bellman Optimality Equations for value functions and action-value functions
-
 
 ### Summary
 
@@ -20,7 +19,6 @@
 - Value functions define an ordering over policies. A policy `p1` is better than `p2` if `v_p1(s) >= v_p2(s)` for all states s. For MDPs, there exist one or more optimal policies that are better than or equal to all other policies.
 - The optimal state value function `v*(s)` is the value function for the optimal policy. Same for `q*(s, a)`. The Bellman Optimality Equation defines how the optimal value of a state is related to the optimal value of successor states. It has a "max" instead of an average.
 
-
 ### Lectures & Readings
 
 **Required:**
@@ -28,12 +26,11 @@
 - [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/RLbook2018.pdf) - Chapter 3: Finite Markov Decision Processes
 - David Silver's RL Course Lecture 2 - Markov Decision Processes ([video](https://www.youtube.com/watch?v=lfHX2hHRMVQ), [slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/MDP.pdf))
 
-
 ### Exercises
 
 - Devise three example tasks of your own that fit into the MDP framework, identifying for each its states, actions, and rewards. Make the three examples as different from each other as possible. The framework is abstract and flesible and can be applied in many different ways. Stretch its limits in some way in at least one of your examples.
   - A merchant in a local bazaar has the goal of maximising his profit given his material and time investment. Each state could encompass the size of his inventory, and measurements about the frequency of customers, or how much they purchase. His actions could be increasing/decreasing the stock in certain items, moving location, finding a way of advertising, etc. I think in this case an infinite-horizon discounted return can be used, because money now is worth more than money in the future ("the time value of money"). I'm not sure whether you __can__ say "infinite", though, since the merchant's life itself is limited and it's likely that he will not be in charge of the store throughout it.
-  - A horse in a single episode of a race has the "sole" goal of winning the race. The abstraction in this case is interesting, because we can't know what the horse's instrumental goals are, how it perceives its reward, or how it "thinks" about its actions. The reward might be how far ahead of other horses it is, or how close to the finish line it is, or it may decrease per timestep, penalising the horse the longer it takes to finish the race. The actions may be increasing or shortening their stride, taking a deeper breath, digging in their hooves more. An internal state of the horse's may take into account how it's doing in the race as well as measurements of their energy levels: how much longer they can keep going, or whether they can speed up or not. Fascinatingly, it may also encompass some sort of emotion about the race itself. Does the horse feel anxiety? Resolve? Is it disappointed when it loses? 
+  - A horse in a single episode of a race has the "sole" goal of winning the race. The abstraction in this case is interesting, because we can't know what the horse's instrumental goals are, how it perceives its reward, or how it "thinks" about its actions. The reward might be how far ahead of other horses it is, or how close to the finish line it is, or it may decrease per timestep, penalising the horse the longer it takes to finish the race. The actions may be increasing or shortening their stride, taking a deeper breath, digging in their hooves more. An internal state of the horse's may take into account how it's doing in the race as well as measurements of their energy levels: how much longer they can keep going, or whether they can speed up or not. Fascinatingly, it may also encompass some sort of emotion about the race itself. Does the horse feel anxiety? Resolve? Is it disappointed when it loses?
   - A smart car of the future—and perhaps some EVs today—may want to maximise the range it can reach on a single fuel charge. It may tweak controls of the various systems in the car, like torque, how much fuel passes through the engine, whether it should coast or accelerate etc. It could also "understand" trade-offs, where it may be important for the passengers to reach a certain destination quickly, at the expense of fuel—an ambulance, for example. The states might contain a satellite position and many data points regarding the car itself. They should also probably contain visual information about the environment, if it is self-driving. The reward may be in terms of fuel left at destination, or time elapsed per trip.
 - Is the MDP framework adequate to usefully represent __all__ goal-directed learning tasks? Can you think of any clear exceptions?
   - Intuitively, no, and there rarely exist formalisations that don't have corner cases. Finite MDPs are not applicable in continuous, infinite environments, and you could posit that the Universe is such an environment. The reason they work is that they're probably the next-best thing—as faithful an approximation of the __real__ formalisation/mechanism of the Universe as we can get.
