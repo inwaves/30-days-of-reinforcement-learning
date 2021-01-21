@@ -42,3 +42,26 @@
         - we could draw a reasonable line at the person's brain, because it encompasses both the high-level decisions around where to go and the automatisms, the engrained habits that comprise "driving" (and which they presumably learned some time before).
 - Give a table analogous to that in example 3.3, but for $$p(s', r |s, a)$$. It should have columns for $$s, a, s', r$$ and $$p(s', r | s, a)$$, and a row for every 4-tuple for which $$p(s', r | s, a) > 0$$
   - Table is [here](https://docs.google.com/spreadsheets/d/1VCYbBD0rx2u_6In7mBVsrFuuTsbQtyhrlxNqZtcJMPQ/edit?usp=sharing).
+- The equations in Section 3.1 are for the continuing case and need to be modified (very slightly) to apply to episodic tasks. Show that you know the modifications needed by giving the modified version of equation 3.3 below.
+  - $$\underset{s' \in \mathcal{S}}{\sum}\ \underset{r \in \mathcal{R}} {\sum} p(s', r | s, a) = 1 \text{, for all } s \in \mathcal{S}, a \in \mathcal{A}(s)$$   (3.3)
+  - I think it should include the terminal state, so $$s' \in \mathcal{S}^{+}$$. 
+- Suppose you treated pole-balancing as an episodic task but also used discounting, with all rewards zero except -1 upon failure. What then would the return be at each time? How does this differ from that in the discounted, continuing formulation of this task?
+  - So discounted, continuing formulation was: reward -1 for each failure, 0 at all other times, so $$G_t = -\gamma^K$$, where $$K$$ is the number of time steps before failure
+    - so that the more time steps pass between failures, the smaller $$\gamma$$ is and the less penalised the agent is
+  - Instead of continuing, now take an episodic formulation with -1 per failure, 0 at all other times
+        - $$G_t = R_{t+1} + \gamma R_{t+2} + \dots \gamma^{T-t+2} R_{T} = \sum_{k=0}^{T-t+2} \gamma^k R_{t+k+1}$$
+- Imagine that you are designing a robot to run a maze. You decide to give it a reward of +1 for escaping from the maze and a reward of zero at all other times. The task seems to break down naturally into episodes—the successive runs through the maze—so you decide to treat it as an episodic task, where the goal is to maximise expected total reward (3.7). After running the learning agent for a while, you find that it is showing no improvement in escaping from the maze. What is going wrong? Have you effectively communicated to the agent what you want it to achieve?
+  - The unspoken assumption here is that we want the robot to take the least amount of time possible until it exits the maze. We don't convey that—there is only a reward at the end of the maze. We want to make this explicit by penalising the robot with a -1 reward at every time step, and reward it with, say, +10 for escaping the maze. That way, it's incentivised to reach the end sooner because between episodes the difference in rewards = how quickly it ended the episode.
+- Suppose $$\gamma = 0.5$$ and the following sequence of rewards is received $$R_1 = -1, R_2 = 2, R_3 = 6, R_4 = 3, R_5 = 2$$ with $$T = 5$$. What are $$G_0, \dots, G_5$$?
+  - $$G_5 = R_6 + \gamma G_6 = 0$$
+  - $$G_4 = R_5 + \gamma G_5 = 2 + 0 = 2$$
+  - $$G_3 = R_4 + \gamma G_4 = 3 + 2/2 = 4$$
+  - $$G_2 = R_3 + \gamma G_3 = 6 + 2 = 8$$
+  - $$G_1 = R_2 + \gamma G_2 = 6$$
+  - $$G_0 = R_1 + \gamma G_1 = 2$$
+- Suppose $$\gamma = 0.9$$ and the reward sequence is $$R_1 = 2$$ followed by an infinite sequence of 7s. What are $$G_1$$ and $$G_0$$?
+  - $$G_t = \sum_{k=0}^\infty \gamma^k R_{t+k+1} = 7 \cdot \sum_{k=0}^\infty \gamma^k = \frac{7}{1-\gamma}$$ for $$t > 1$$
+  - $$G_1 = 7 + \gamma G_2 = 7 + \frac{7 \gamma}{1-\gamma}= 7 + 6.3/0.1 = 70$$
+  - $$G_0 = 2 + \gamma G_1 = 2 + 63 = 65$$
+- Prove the second equality in 
+  - $$G_t = \overset{\infty} {\underset{k=0}{\sum}} \gamma^k = \frac{1}{1-\gamma}$$
